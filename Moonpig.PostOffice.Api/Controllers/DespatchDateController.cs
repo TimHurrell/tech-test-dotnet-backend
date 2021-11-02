@@ -32,4 +32,88 @@
             else return new DespatchDate { Date = _mlt };
         }
     }
+
+    public class ProductInformationDataBase
+    {
+        public int Get(List<int> productIds)
+        {
+
+            int highleadtime = 0;
+            foreach (var ID in productIds)
+            {
+                DbContext dbContext = new DbContext();
+                var s = dbContext.Products.Single(x => x.ProductId == ID).SupplierId;
+                var lt = dbContext.Suppliers.Single(x => x.SupplierId == s).LeadTime;
+                if (lt > highleadtime)
+                { highleadtime = lt; }
+                
+            }
+            return highleadtime;
+        }
+
+    }
+
+
+    public class DateCalculatorUsingLeadTime : Controller
+    {      
+        public DespatchDate Get(DateTime orderdate, int leadtime)
+        {
+            
+            return new DespatchDate { Date = orderdate.AddDays(leadtime) };
+        }
+    }
+
+
+    public class ExtendLeadTimeIfDispatchDateFallsOnAWeekend
+    {
+        public int Get(DateTime orderdate, int leadtime)
+        {
+
+            if (orderdate.AddDays(leadtime).DayOfWeek == DayOfWeek.Saturday)
+            {
+                leadtime+=2;
+            }
+            else if (orderdate.AddDays(leadtime).DayOfWeek == DayOfWeek.Sunday)
+            {
+                leadtime += 1; ;
+            }
+            return leadtime;
+        }
+
+    }
+
+
+    public class ExtendLeadTimeIfLeadTimeCrossesAWeekend
+    {
+        public int Get(DateTime orderdate, int leadtime)
+        {
+            for (int i = 0; i <= leadtime; i++)
+            {
+                if (orderdate.AddDays(i).DayOfWeek == DayOfWeek.Saturday || orderdate.AddDays(i).DayOfWeek == DayOfWeek.Sunday)
+                {
+                    leadtime++;
+                }
+            }
+            
+            return leadtime;
+        }
+
+    }
+
+
+    public class IdentifyIfWeekend
+    {
+        public Boolean isWeekend;
+        public IdentifyIfWeekend (DateTime date)
+        {
+
+                if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    isWeekend = true;
+                }
+        }
+
+    }
+
+
 }
