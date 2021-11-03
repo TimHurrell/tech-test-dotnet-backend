@@ -46,7 +46,7 @@
                 var lt = dbContext.Suppliers.Single(x => x.SupplierId == s).LeadTime;
                 if (lt > highleadtime)
                 { highleadtime = lt; }
-                
+
             }
             return highleadtime;
         }
@@ -55,10 +55,10 @@
 
 
     public class DateCalculatorUsingLeadTime : Controller
-    {      
+    {
         public DespatchDate Get(DateTime orderdate, int leadtime)
         {
-            
+
             return new DespatchDate { Date = orderdate.AddDays(leadtime) };
         }
     }
@@ -71,7 +71,7 @@
 
             if (orderdate.AddDays(leadtime).DayOfWeek == DayOfWeek.Saturday)
             {
-                leadtime+=2;
+                leadtime += 2;
             }
             else if (orderdate.AddDays(leadtime).DayOfWeek == DayOfWeek.Sunday)
             {
@@ -81,6 +81,25 @@
         }
 
     }
+
+    // supplier class and post office class
+    // supplier service class
+    // get supplier(s)[] for a particualr order
+    //get supplier with the longest leadtime
+
+
+    //public class SupplierService {
+    //    public IEnumerable<Supplier> GetSuppliersForOrder()
+    //    {
+
+    //    }
+
+    //    public Supplier GetSupplierWithLongestLeadTime(IEnumerable<Supplier>)
+
+
+    //    }
+
+    //}
 
 
     public class ExtendLeadTimeIfLeadTimeCrossesAWeekend
