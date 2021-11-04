@@ -11,115 +11,136 @@
     {
 
         [Fact]
-        public void TestSupplierFromProductSelected()
+        public void TestSupplierIDFromProductSelected()
         {
             Supplier supplierinstance = new Supplier();
             supplierinstance.GetSupplierIdFromProduct(3);
 
 
-            Assert.Equal(4, supplierinstance.GetSupplierIdFromProduct(3));
-        }
-
-
-        [Fact]
-        public void GetLeadTimeWithJustOneProduct()
-        {
-            ProductInformationDataBase databaseinstance = new ProductInformationDataBase();
-
-            Assert.Equal(1, databaseinstance.Get(new List<int>() { 1 }));
+            Assert.Equal(4, supplierinstance.SupplierId);
         }
 
         [Fact]
-        public void GetLeadTimeWithJustOtherProduct()
+        public void TestSupplierLeadTimeFromProductSelected()
         {
-            ProductInformationDataBase databaseinstance = new ProductInformationDataBase();
+            Supplier supplierinstance = new Supplier();
+            supplierinstance.GetSupplierIdFromProduct(3);
 
-            Assert.Equal(13, databaseinstance.Get(new List<int>() { 10 }));
+
+            Assert.Equal(3, supplierinstance.LeadTime);
         }
 
         [Fact]
-        public void GetLeadTimeWithThreeProducts()
+        public void TestReturnedProductIdsFromSupplierService()
         {
-            ProductInformationDataBase databaseinstance = new ProductInformationDataBase();
+            SupplierService supplierServiceinstance = new SupplierService();
 
-            Assert.Equal(13, databaseinstance.Get(new List<int>() { 10, 2, 1 }));
-        }
-
-        [Fact]
-        public void GetLeadTimeWithThreeProductsSwitched()
-        {
-            ProductInformationDataBase databaseinstance = new ProductInformationDataBase();
-
-            Assert.Equal(13, databaseinstance.Get(new List<int>() { 2, 10, 1 }));
-        }
-
-        [Fact]
-        public void GetDispatchDateFromOrderDateAndLeadTime()
-        {
-            DateCalculatorUsingLeadTime initialdispatchdatecalculatorinstance = new DateCalculatorUsingLeadTime();
-
-            var date = initialdispatchdatecalculatorinstance.Get(new DateTime(2018, 1, 21), 6);
+            List<int> expectedIds = new List<int> { 4};
 
 
-            date.Date.ShouldBe(new DateTime(2018, 1, 27));
-        }
-
-        [Fact]
-        public void GetLeadTimeIfDispatchDateFallsOnSaturday()
-        {
-            ExtendLeadTimeIfDispatchDateFallsOnAWeekend extendleadtimeifdispatchdatefallsonaweekendinstance = new ExtendLeadTimeIfDispatchDateFallsOnAWeekend();
-            int extendedleadtime = extendleadtimeifdispatchdatefallsonaweekendinstance.Get(new DateTime(2021, 10, 29), 1);
-
-            Assert.Equal(3, extendedleadtime);
+            Assert.Equal(expectedIds, supplierServiceinstance.GetSuppliersForOrder(new List<int>() { 3 }));
         }
 
 
-        [Fact]
-        public void GetLeadTimeIfDispatchDateFallsOnSunday()
-        {
-            ExtendLeadTimeIfDispatchDateFallsOnAWeekend extendleadtimeifdispatchdatefallsonaweekendinstance = new ExtendLeadTimeIfDispatchDateFallsOnAWeekend();
-            int extendedleadtime = extendleadtimeifdispatchdatefallsonaweekendinstance.Get(new DateTime(2021, 10, 29), 2);
+        //    [Fact]
+        //    public void GetLeadTimeWithJustOneProduct()
+        //    {
+        //        ProductInformationDataBase databaseinstance = new ProductInformationDataBase();
 
-            Assert.Equal(3, extendedleadtime);
-        }
+        //        Assert.Equal(1, databaseinstance.Get(new List<int>() { 1 }));
+        //    }
+
+        //    [Fact]
+        //    public void GetLeadTimeWithJustOtherProduct()
+        //    {
+        //        ProductInformationDataBase databaseinstance = new ProductInformationDataBase();
+
+        //        Assert.Equal(13, databaseinstance.Get(new List<int>() { 10 }));
+        //    }
+
+        //    [Fact]
+        //    public void GetLeadTimeWithThreeProducts()
+        //    {
+        //        ProductInformationDataBase databaseinstance = new ProductInformationDataBase();
+
+        //        Assert.Equal(13, databaseinstance.Get(new List<int>() { 10, 2, 1 }));
+        //    }
+
+        //    [Fact]
+        //    public void GetLeadTimeWithThreeProductsSwitched()
+        //    {
+        //        ProductInformationDataBase databaseinstance = new ProductInformationDataBase();
+
+        //        Assert.Equal(13, databaseinstance.Get(new List<int>() { 2, 10, 1 }));
+        //    }
+
+        //    [Fact]
+        //    public void GetDispatchDateFromOrderDateAndLeadTime()
+        //    {
+        //        DateCalculatorUsingLeadTime initialdispatchdatecalculatorinstance = new DateCalculatorUsingLeadTime();
+
+        //        var date = initialdispatchdatecalculatorinstance.Get(new DateTime(2018, 1, 21), 6);
 
 
-        [Fact]
-        public void GetLeadTimeIfDispatchDateFallsOnMonday()
-        {
-            ExtendLeadTimeIfDispatchDateFallsOnAWeekend extendleadtimeifdispatchdatefallsonaweekendinstance = new ExtendLeadTimeIfDispatchDateFallsOnAWeekend();
-            int extendedleadtime = extendleadtimeifdispatchdatefallsonaweekendinstance.Get(new DateTime(2021, 10, 29), 3);
+        //        date.Date.ShouldBe(new DateTime(2018, 1, 27));
+        //    }
 
-            Assert.Equal(3, extendedleadtime);
-        }
+        //    [Fact]
+        //    public void GetLeadTimeIfDispatchDateFallsOnSaturday()
+        //    {
+        //        ExtendLeadTimeIfDispatchDateFallsOnAWeekend extendleadtimeifdispatchdatefallsonaweekendinstance = new ExtendLeadTimeIfDispatchDateFallsOnAWeekend();
+        //        int extendedleadtime = extendleadtimeifdispatchdatefallsonaweekendinstance.Get(new DateTime(2021, 10, 29), 1);
+
+        //        Assert.Equal(3, extendedleadtime);
+        //    }
 
 
-        [Fact]
-        public void GetLeadTimeIfLeadTimeCrossesOneWeekend()
-        {
-            ExtendLeadTimeIfLeadTimeCrossesAWeekend extendLeadTimeIfLeadTimeCrossesAWeekendinstance = new ExtendLeadTimeIfLeadTimeCrossesAWeekend();
-            int extendedleadtime = extendLeadTimeIfLeadTimeCrossesAWeekendinstance.Get(new DateTime(2021, 10, 29), 5);
+        //    [Fact]
+        //    public void GetLeadTimeIfDispatchDateFallsOnSunday()
+        //    {
+        //        ExtendLeadTimeIfDispatchDateFallsOnAWeekend extendleadtimeifdispatchdatefallsonaweekendinstance = new ExtendLeadTimeIfDispatchDateFallsOnAWeekend();
+        //        int extendedleadtime = extendleadtimeifdispatchdatefallsonaweekendinstance.Get(new DateTime(2021, 10, 29), 2);
 
-            Assert.Equal(7, extendedleadtime);
-        }
+        //        Assert.Equal(3, extendedleadtime);
+        //    }
 
-        [Fact]
-        public void GetLeadTimeIfLeadTimeCrossesTwoWeekends()
-        {
-            ExtendLeadTimeIfLeadTimeCrossesAWeekend extendLeadTimeIfLeadTimeCrossesAWeekendinstance = new ExtendLeadTimeIfLeadTimeCrossesAWeekend();
-            int extendedleadtime = extendLeadTimeIfLeadTimeCrossesAWeekendinstance.Get(new DateTime(2021, 10, 26), 13);
 
-            Assert.Equal(17, extendedleadtime);
-        }
+        //    [Fact]
+        //    public void GetLeadTimeIfDispatchDateFallsOnMonday()
+        //    {
+        //        ExtendLeadTimeIfDispatchDateFallsOnAWeekend extendleadtimeifdispatchdatefallsonaweekendinstance = new ExtendLeadTimeIfDispatchDateFallsOnAWeekend();
+        //        int extendedleadtime = extendleadtimeifdispatchdatefallsonaweekendinstance.Get(new DateTime(2021, 10, 29), 3);
 
-        [Fact]
-        public void GetLeadTimeIfLeadTimeCrossesThreeWeekends()
-        {
-            ExtendLeadTimeIfLeadTimeCrossesAWeekend extendLeadTimeIfLeadTimeCrossesAWeekendinstance = new ExtendLeadTimeIfLeadTimeCrossesAWeekend();
-            int extendedleadtime = extendLeadTimeIfLeadTimeCrossesAWeekendinstance.Get(new DateTime(2021, 10, 27), 13);
+        //        Assert.Equal(3, extendedleadtime);
+        //    }
 
-            Assert.Equal(19, extendedleadtime);
-        }
+
+        //    [Fact]
+        //    public void GetLeadTimeIfLeadTimeCrossesOneWeekend()
+        //    {
+        //        ExtendLeadTimeIfLeadTimeCrossesAWeekend extendLeadTimeIfLeadTimeCrossesAWeekendinstance = new ExtendLeadTimeIfLeadTimeCrossesAWeekend();
+        //        int extendedleadtime = extendLeadTimeIfLeadTimeCrossesAWeekendinstance.Get(new DateTime(2021, 10, 29), 5);
+
+        //        Assert.Equal(7, extendedleadtime);
+        //    }
+
+        //    [Fact]
+        //    public void GetLeadTimeIfLeadTimeCrossesTwoWeekends()
+        //    {
+        //        ExtendLeadTimeIfLeadTimeCrossesAWeekend extendLeadTimeIfLeadTimeCrossesAWeekendinstance = new ExtendLeadTimeIfLeadTimeCrossesAWeekend();
+        //        int extendedleadtime = extendLeadTimeIfLeadTimeCrossesAWeekendinstance.Get(new DateTime(2021, 10, 26), 13);
+
+        //        Assert.Equal(17, extendedleadtime);
+        //    }
+
+        //    [Fact]
+        //    public void GetLeadTimeIfLeadTimeCrossesThreeWeekends()
+        //    {
+        //        ExtendLeadTimeIfLeadTimeCrossesAWeekend extendLeadTimeIfLeadTimeCrossesAWeekendinstance = new ExtendLeadTimeIfLeadTimeCrossesAWeekend();
+        //        int extendedleadtime = extendLeadTimeIfLeadTimeCrossesAWeekendinstance.Get(new DateTime(2021, 10, 27), 13);
+
+        //        Assert.Equal(19, extendedleadtime);
+        //    }
     }
 
 }

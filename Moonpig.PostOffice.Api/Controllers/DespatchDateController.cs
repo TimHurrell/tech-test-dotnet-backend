@@ -87,19 +87,30 @@
     // get supplier(s)[] for a particualr order
     //get supplier with the longest leadtime
 
-
-    //public class SupplierService {
     //    public IEnumerable<Supplier> GetSuppliersForOrder()
-    //    {
+    public class SupplierService {
 
-    //    }
+        public List<int> GetSuppliersForOrder(List<int> productIds)
+       {
+            List<int> listofsuppliers = new List<int>();
+            foreach (var ID in productIds)
+            {
+                Supplier supplierinstance = new Supplier();
+                supplierinstance.GetSupplierIdFromProduct(ID);
+                listofsuppliers.Add(supplierinstance.SupplierId);
 
-    //    public Supplier GetSupplierWithLongestLeadTime(IEnumerable<Supplier>)
+            }
+            return listofsuppliers;
 
 
-    //    }
+        }
 
-    //}
+        //    public Supplier GetSupplierWithLongestLeadTime(IEnumerable<Supplier>)
+
+
+        //    }
+
+    }
 
 
     public class ExtendLeadTimeIfLeadTimeCrossesAWeekend
