@@ -88,28 +88,33 @@
     //get supplier with the longest leadtime
 
     //    public IEnumerable<Supplier> GetSuppliersForOrder()
-    public class SupplierService {
+    public class SupplierService
+    {
+        private readonly IDbContext _dbContext;
 
-        public List<int> GetSuppliersForOrder(List<int> productIds)
-       {
-            List<int> listofsuppliers = new List<int>();
+        public SupplierService(IDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+        public List<Supplier> GetSuppliersForOrder(List<int> productIds)
+        {
+            List<Supplier> listofsuppliers = new List<Supplier>();
             foreach (var ID in productIds)
             {
-                Supplier supplierinstance = new Supplier();
-                supplierinstance.GetSupplierIdFromProduct(ID);
-                listofsuppliers.Add(supplierinstance.SupplierId);
+                int supplierId = _dbContext.Products.Single(x => productIds.Contains(ID)).SupplierId;
+                Supplier supplier = _dbContext.Suppliers.Single(o => o.SupplierId == supplierId);
+                listofsuppliers.Add(supplier);
 
             }
             return listofsuppliers;
-
-
         }
 
-        //    public Supplier GetSupplierWithLongestLeadTime(IEnumerable<Supplier>)
+        //complete this method
+        //public Supplier GetSupplierWithLongestLeadTime(IEnumerable<Supplier> suppliers)
 
-
-        //    }
-
+        //complete this method
+        //public DateTime GetOrderCompletionDate(Order order)
     }
 
 
@@ -124,7 +129,7 @@
                     leadtime++;
                 }
             }
-            
+
             return leadtime;
         }
 
@@ -134,13 +139,13 @@
     public class IdentifyIfWeekend
     {
         public Boolean isWeekend;
-        public IdentifyIfWeekend (DateTime date)
+        public IdentifyIfWeekend(DateTime date)
         {
 
-                if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
-                {
-                    isWeekend = true;
-                }
+            if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+            {
+                isWeekend = true;
+            }
         }
 
     }
