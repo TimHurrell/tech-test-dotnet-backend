@@ -10,35 +10,56 @@
     public class PostOfficeTests
     {
 
-        [Fact]
-        public void TestSupplierIDFromProductSelected()
-        {
-            Supplier supplierinstance = new Supplier();
-            supplierinstance.GetSupplierIdFromProduct(3);
+       
+
+        //[Fact]
+        //public void TestSupplierLeadTimeFromProductSelected()
+        //{
+        //    Supplier supplierinstance = new Supplier();
+        //    supplierinstance.GetSupplierIdFromProduct(3);
 
 
-            Assert.Equal(4, supplierinstance.SupplierId);
-        }
-
-        [Fact]
-        public void TestSupplierLeadTimeFromProductSelected()
-        {
-            Supplier supplierinstance = new Supplier();
-            supplierinstance.GetSupplierIdFromProduct(3);
-
-
-            Assert.Equal(3, supplierinstance.LeadTime);
-        }
+        //    Assert.Equal(3, supplierinstance.LeadTime);
+        //}
 
         [Fact]
-        public void TestReturnedProductIdsFromSupplierService()
+        public void TestReturnedOneProductIdFromSupplierService()
         {
-            SupplierService supplierServiceinstance = new SupplierService();
+            DbContext dbContext = new DbContext();
+            SupplierService supplierServiceinstance = new SupplierService(dbContext);
+
+            List<Supplier> listofsuppliers = supplierServiceinstance.GetSuppliersForOrder(new List<int>() { 3 });
+
+            List<int> listofsupplierids = new List<int>();
+            foreach (var ID in listofsuppliers)
+            {
+                listofsupplierids.Add(ID.SupplierId);
+            }
 
             List<int> expectedIds = new List<int> { 4};
 
 
-            Assert.Equal(expectedIds, supplierServiceinstance.GetSuppliersForOrder(new List<int>() { 3 }));
+            Assert.Equal(expectedIds, listofsupplierids);
+        }
+
+        [Fact]
+        public void TestReturnedMultipleProductIdFromSupplierService()
+        {
+            DbContext dbContext = new DbContext();
+            SupplierService supplierServiceinstance = new SupplierService(dbContext);
+
+            List<Supplier> listofsuppliers = supplierServiceinstance.GetSuppliersForOrder(new List<int>() { 3,2,1 });
+
+            List<int> listofsupplierids = new List<int>();
+            foreach (var ID in listofsuppliers)
+            {
+                listofsupplierids.Add(ID.SupplierId);
+            }
+
+            List<int> expectedIds = new List<int> { 4,2,1 };
+
+
+            Assert.Equal(expectedIds, listofsupplierids);
         }
 
 
