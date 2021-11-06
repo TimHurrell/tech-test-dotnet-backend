@@ -83,13 +83,23 @@
         }
 
 
-        //    [Fact]
-        //    public void GetLeadTimeWithJustOneProduct()
-        //    {
-        //        ProductInformationDataBase databaseinstance = new ProductInformationDataBase();
+        [Fact]
+        public void GetLeadTimeWithJustOneProduct()
+        {
+            Supplier Supplier1 = new Supplier();
+            Supplier Supplier2 = new Supplier();
+            Supplier Supplier3 = new Supplier();
+            Supplier1.LeadTime = 3;
+            Supplier2.LeadTime = 5;
+            Supplier3.LeadTime = 2;
 
-        //        Assert.Equal(1, databaseinstance.Get(new List<int>() { 1 }));
-        //    }
+            List<Supplier> listofsuppliers = new List<Supplier>() { Supplier1, Supplier2, Supplier3 };
+
+            DbContext dbContext = new DbContext();
+            SupplierService supplierServiceinstance = new SupplierService(dbContext);
+
+            Assert.Equal(5, supplierServiceinstance.GetSupplierWithLongestLeadTime(listofsuppliers).LeadTime);
+        }
 
         //    [Fact]
         //    public void GetLeadTimeWithJustOtherProduct()

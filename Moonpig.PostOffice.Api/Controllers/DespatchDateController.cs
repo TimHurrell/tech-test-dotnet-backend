@@ -114,7 +114,21 @@
         }
 
         //complete this method
-        //public Supplier GetSupplierWithLongestLeadTime(IEnumerable<Supplier> suppliers)
+        public Supplier GetSupplierWithLongestLeadTime(IEnumerable<Supplier> listofsuppliers)
+        {
+            int LongestLeadTime = 0;
+            Supplier selectedSupplier = new Supplier();
+            foreach (var supplier in listofsuppliers)
+            {
+                if (supplier.LeadTime > LongestLeadTime)
+                { LongestLeadTime = supplier.LeadTime;
+                    selectedSupplier = supplier;
+                }
+
+            }
+            return selectedSupplier;
+
+        }
 
         //complete this method
         //public DateTime GetOrderCompletionDate(Order order)
