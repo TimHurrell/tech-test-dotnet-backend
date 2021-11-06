@@ -62,6 +62,26 @@
             Assert.Equal(expectedIds, listofsupplierids);
         }
 
+        [Fact]
+        public void TestReturnedOneLeadtimeFromSupplierService()
+        {
+            DbContext dbContext = new DbContext();
+            SupplierService supplierServiceinstance = new SupplierService(dbContext);
+
+            List<Supplier> listofsuppliers = supplierServiceinstance.GetSuppliersForOrder(new List<int>() { 3 });
+
+            List<int> listofsupplierids = new List<int>();
+            foreach (var ID in listofsuppliers)
+            {
+                listofsupplierids.Add(ID.LeadTime);
+            }
+
+            List<int> expectedIds = new List<int> { 3 };
+
+
+            Assert.Equal(expectedIds, listofsupplierids);
+        }
+
 
         //    [Fact]
         //    public void GetLeadTimeWithJustOneProduct()
