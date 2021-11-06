@@ -104,9 +104,9 @@
             {
                 // this line doesnt work.int supplierId = _dbContext.Products.Single(x => productIds.Contains(ID)).SupplierId;
                 var s = _dbContext.Products.Single(x => x.ProductId == ID).SupplierId;
-                //int leadTime = _dbContext.Suppliers.Single(x => x.SupplierId == supplierId).LeadTime;
+                var lt = _dbContext.Suppliers.Single(x => x.SupplierId == s).LeadTime;
                 Supplier supplier = _dbContext.Suppliers.Single(o => o.SupplierId == s);
-                //supplier = _dbContext.Suppliers.Single(o => o.LeadTime == leadTime);
+                supplier = _dbContext.Suppliers.Single(o => o.LeadTime == lt);
                 listofsuppliers.Add(supplier);
 
             }
