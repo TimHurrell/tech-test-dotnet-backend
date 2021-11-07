@@ -66,15 +66,21 @@
         public void TestReturnedOneLeadtimeFromSupplierService()
         {
             DbContext dbContext = new DbContext();
-            SupplierService supplierServiceinstance = new SupplierService(dbContext);
+            SupplierService supplierService = new SupplierService(dbContext);
 
-            List<Supplier> listofsuppliers = supplierServiceinstance.GetSuppliersForOrder(new List<int>() { 3 });
+            List<Supplier> suppliers = supplierService.GetSuppliersForOrder(new List<int>() { 3 });
 
+
+            //this isn't a list of supplier ids its a list of leadtimes so should be renamed.
             List<int> listofsupplierids = new List<int>();
-            foreach (var ID in listofsuppliers)
+
+            //you can probably improve on this because we know we'll only get back one supplier because
+            //there is only one item on the order
+            foreach (var supplier in suppliers)
             {
-                listofsupplierids.Add(ID.LeadTime);
+                listofsupplierids.Add(supplier.LeadTime);
             }
+
 
             List<int> expectedIds = new List<int> { 3 };
 
