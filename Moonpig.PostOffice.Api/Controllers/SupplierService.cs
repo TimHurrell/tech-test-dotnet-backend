@@ -25,14 +25,9 @@
             List<Supplier> listofsuppliers = new List<Supplier>();
             foreach (var ID in productIds)
             {
-
-                // this line doesnt work.int supplierId = _dbContext.Products.Single(x => productIds.Contains(ID)).SupplierId;
-                var s = _dbContext.Products.Single(x => x.ProductId == ID).SupplierId;
-                var lt = _dbContext.Suppliers.Single(x => x.SupplierId == s).LeadTime;
-                Supplier supplier = _dbContext.Suppliers.Single(o => o.SupplierId == s);
-                supplier = _dbContext.Suppliers.Single(o => o.LeadTime == lt);
+                int supplierId = _dbContext.Products.Single(x => x.ProductId==ID).SupplierId;
+                Supplier supplier = _dbContext.Suppliers.Single(o => o.SupplierId == supplierId);
                 listofsuppliers.Add(supplier);
-
             }
             return listofsuppliers;
         }
