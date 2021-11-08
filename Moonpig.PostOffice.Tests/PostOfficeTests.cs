@@ -10,7 +10,7 @@
     public class PostOfficeTests
     {
 
-       
+
 
         //[Fact]
         //public void TestSupplierLeadTimeFromProductSelected()
@@ -36,7 +36,7 @@
                 listofsupplierids.Add(ID.SupplierId);
             }
 
-            List<int> expectedIds = new List<int> { 4};
+            List<int> expectedIds = new List<int> { 4 };
 
 
             Assert.Equal(expectedIds, listofsupplierids);
@@ -48,7 +48,7 @@
             DbContext dbContext = new DbContext();
             SupplierService supplierServiceinstance = new SupplierService(dbContext);
 
-            List<Supplier> listofsuppliers = supplierServiceinstance.GetSuppliersForOrder(new List<int>() { 3,2,1 });
+            List<Supplier> listofsuppliers = supplierServiceinstance.GetSuppliersForOrder(new List<int>() { 3, 2, 1 });
 
             List<int> listofsupplierids = new List<int>();
             foreach (var ID in listofsuppliers)
@@ -56,7 +56,7 @@
                 listofsupplierids.Add(ID.SupplierId);
             }
 
-            List<int> expectedIds = new List<int> { 4,2,1 };
+            List<int> expectedIds = new List<int> { 4, 2, 1 };
 
 
             Assert.Equal(expectedIds, listofsupplierids);
@@ -100,23 +100,13 @@
         }
 
 
-
-
-            [Fact]
+        [Fact]
         public void GetDispatchDateFromOrderDateForSupplierWithLongestLeadtime()
         {
-            Supplier Supplier2 = new Supplier();
-            Supplier2.LeadTime = 5;
+            var dbContext = new DbContext();
+            var supplierService = new SupplierService(dbContext);
 
-            DbContext dbContext = new DbContext();
-            SupplierService supplierServiceinstance = new SupplierService(dbContext);
-
-            DateCalculatorUsingLeadTime initialdispatchdatecalculatorinstance = new DateCalculatorUsingLeadTime();
-
-            var date = supplierServiceinstance.GetOrderCompletionDate(new DateTime(2018, 1, 21), Supplier2);
-
-
-            date.Date.ShouldBe(new DateTime(2018, 1, 26));
+            supplierService.GetOrderCompletionDate(new DateTime(2021, 11, 5), new List<int> { 1, 2 }).ShouldBe(new DateTime(2021, 11, 9));
         }
 
         //    [Fact]

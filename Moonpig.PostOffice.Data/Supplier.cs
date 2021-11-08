@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace Moonpig.PostOffice.Data
 {
@@ -13,12 +14,13 @@ namespace Moonpig.PostOffice.Data
         public int LeadTime { get; set; }
 
 
-        //using the leadtime from this object work out the despatch date.
-        //}
-
-        //public Datetime GetSupplierDespatchDate(DateTime orderdate) {
-
-        //using the leadtime from this object work out the despatch date.
-        //}
+        public DateTime GetSupplierDispatchDate(DateTime orderdate)
+        {
+            //using the leadtime from this object work out the despatch date.
+            //and write a test for it
+            //at this point we don't care what was ordered. this class knows nothing of orders
+            //and doesn't need to
+            throw new NotImplementedException();
+        }
     }
 }
