@@ -69,28 +69,20 @@
             SupplierService supplierService = new SupplierService(dbContext);
 
             List<Supplier> suppliers = supplierService.GetSuppliersForOrder(new List<int>() { 3 });
+            List<int> listofsupplierleadtimes = new List<int>();
+            listofsupplierleadtimes.Add(suppliers[0].LeadTime);
 
-
-            //this isn't a list of supplier ids its a list of leadtimes so should be renamed.
-            List<int> listofsupplierids = new List<int>();
-
-            //you can probably improve on this because we know we'll only get back one supplier because
-            //there is only one item on the order
-            foreach (var supplier in suppliers)
-            {
-                listofsupplierids.Add(supplier.LeadTime);
-            }
 
 
             List<int> expectedIds = new List<int> { 3 };
 
 
-            Assert.Equal(expectedIds, listofsupplierids);
+            Assert.Equal(expectedIds, listofsupplierleadtimes);
         }
 
 
         [Fact]
-        public void GetLeadTimeWithJustOneProduct()
+        public void TestGetLongestLeadTimeWithFromThreeSuppliers()
         {
             Supplier Supplier1 = new Supplier();
             Supplier Supplier2 = new Supplier();
@@ -107,40 +99,25 @@
             Assert.Equal(5, supplierServiceinstance.GetSupplierWithLongestLeadTime(listofsuppliers).LeadTime);
         }
 
-        //    [Fact]
-        //    public void GetLeadTimeWithJustOtherProduct()
-        //    {
-        //        ProductInformationDataBase databaseinstance = new ProductInformationDataBase();
-
-        //        Assert.Equal(13, databaseinstance.Get(new List<int>() { 10 }));
-        //    }
-
-        //    [Fact]
-        //    public void GetLeadTimeWithThreeProducts()
-        //    {
-        //        ProductInformationDataBase databaseinstance = new ProductInformationDataBase();
-
-        //        Assert.Equal(13, databaseinstance.Get(new List<int>() { 10, 2, 1 }));
-        //    }
-
-        //    [Fact]
-        //    public void GetLeadTimeWithThreeProductsSwitched()
-        //    {
-        //        ProductInformationDataBase databaseinstance = new ProductInformationDataBase();
-
-        //        Assert.Equal(13, databaseinstance.Get(new List<int>() { 2, 10, 1 }));
-        //    }
-
-        //    [Fact]
-        //    public void GetDispatchDateFromOrderDateAndLeadTime()
-        //    {
-        //        DateCalculatorUsingLeadTime initialdispatchdatecalculatorinstance = new DateCalculatorUsingLeadTime();
-
-        //        var date = initialdispatchdatecalculatorinstance.Get(new DateTime(2018, 1, 21), 6);
 
 
-        //        date.Date.ShouldBe(new DateTime(2018, 1, 27));
-        //    }
+
+            [Fact]
+        public void GetDispatchDateFromOrderDateForSupplierWithLongestLeadtime()
+        {
+            Supplier Supplier2 = new Supplier();
+            Supplier2.LeadTime = 5;
+
+            DbContext dbContext = new DbContext();
+            SupplierService supplierServiceinstance = new SupplierService(dbContext);
+
+            DateCalculatorUsingLeadTime initialdispatchdatecalculatorinstance = new DateCalculatorUsingLeadTime();
+
+            var date = supplierServiceinstance.GetOrderCompletionDate(new DateTime(2018, 1, 21), Supplier2);
+
+
+            date.Date.ShouldBe(new DateTime(2018, 1, 26));
+        }
 
         //    [Fact]
         //    public void GetLeadTimeIfDispatchDateFallsOnSaturday()

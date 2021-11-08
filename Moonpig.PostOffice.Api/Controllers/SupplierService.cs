@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Data;
+    using System;
 
     // supplier class and post office class
     // supplier service class
@@ -24,8 +25,12 @@
             List<Supplier> listofsuppliers = new List<Supplier>();
             foreach (var ID in productIds)
             {
-                int supplierId = _dbContext.Products.Single(x => productIds.Contains(x.ProductId)).SupplierId;
-                Supplier supplier = _dbContext.Suppliers.Single(o => o.SupplierId == supplierId);
+
+                // this line doesnt work.int supplierId = _dbContext.Products.Single(x => productIds.Contains(ID)).SupplierId;
+                var s = _dbContext.Products.Single(x => x.ProductId == ID).SupplierId;
+                var lt = _dbContext.Suppliers.Single(x => x.SupplierId == s).LeadTime;
+                Supplier supplier = _dbContext.Suppliers.Single(o => o.SupplierId == s);
+                supplier = _dbContext.Suppliers.Single(o => o.LeadTime == lt);
                 listofsuppliers.Add(supplier);
 
             }
@@ -51,7 +56,13 @@
 
 
         //complete this method
-        //public DateTime GetOrderCompletionDate(Order order)
+        public DateTime GetOrderCompletionDate(DateTime orderdate, Supplier supplier)
+
+            { 
+             DateTime DespatchDate;
+            DespatchDate = orderdate.AddDays(supplier.LeadTime);
+            return DespatchDate;
+            }
     }
 
 
