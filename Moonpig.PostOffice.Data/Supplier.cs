@@ -20,7 +20,11 @@ namespace Moonpig.PostOffice.Data
             //and write a test for it
             //at this point we don't care what was ordered. this class knows nothing of orders
             //and doesn't need to
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            DateTime DespatchDate;
+            DespatchDate = orderdate.AddDays(LeadTime);
+            return DespatchDate;
+
         }
     }
 }
