@@ -5,12 +5,6 @@
     using Data;
     using System;
 
-    // supplier class and post office class
-    // supplier service class
-    // get supplier(s)[] for a particualr order
-    //get supplier with the longest leadtime
-
-    //    public IEnumerable<Supplier> GetSuppliersForOrder()
     public class SupplierService
     {
         private readonly IDbContext _dbContext;
@@ -23,16 +17,11 @@
         public List<Supplier> GetSuppliersForOrder(List<int> productIds)
         {
             List<Supplier> listofsuppliers = new List<Supplier>();
-            foreach (var ID in productIds)
+            foreach (var productId in productIds)
             {
-
-                // this line doesnt work.int supplierId = _dbContext.Products.Single(x => productIds.Contains(ID)).SupplierId;
-                var s = _dbContext.Products.Single(x => x.ProductId == ID).SupplierId;
-                var lt = _dbContext.Suppliers.Single(x => x.SupplierId == s).LeadTime;
-                Supplier supplier = _dbContext.Suppliers.Single(o => o.SupplierId == s);
-                supplier = _dbContext.Suppliers.Single(o => o.LeadTime == lt);
+                int supplierId = _dbContext.Products.Single(x => x.ProductId == productId).SupplierId;
+                Supplier supplier = _dbContext.Suppliers.Single(o => o.SupplierId == supplierId);
                 listofsuppliers.Add(supplier);
-
             }
             return listofsuppliers;
         }
@@ -54,16 +43,19 @@
 
         }
 
-
         //complete this method
-        public DateTime GetOrderCompletionDate(DateTime orderdate, Supplier supplier)
+        //public DateTime GetOrderCompletionDate(DateTime orderdate, Supplier supplier)
+        //{
+        //    DateTime DespatchDate;
+        //    DespatchDate = orderdate.AddDays(supplier.LeadTime);
+        //    return DespatchDate;
+        //}
 
-            { 
-             DateTime DespatchDate;
-            DespatchDate = orderdate.AddDays(supplier.LeadTime);
-            return DespatchDate;
-            }
+        public DateTime GetOrderCompletionDate(DateTime orderdate, List<int> productIds)
+        {
+            var suppliers = GetSuppliersForOrder(productIds);
+            var supplier = GetSupplierWithLongestLeadTime(suppliers);
+            return supplier.GetSupplierDispatchDate(orderdate);
+        }
     }
-
-
-}
+ }
