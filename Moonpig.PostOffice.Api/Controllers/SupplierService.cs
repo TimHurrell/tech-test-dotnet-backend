@@ -14,7 +14,7 @@
             _dbContext = dbContext;
         }
 
-        public List<Supplier> GetSuppliersForOrder(List<int> productIds)
+        public List<Supplier> GetSuppliersForOrder(IEnumerable<int> productIds)
         {
             List<Supplier> listofsuppliers = new List<Supplier>();
             foreach (var productId in productIds)
@@ -37,19 +37,9 @@
                     LongestLeadTime = supplier.LeadTime;
                     selectedSupplier = supplier;
                 }
-
             }
             return selectedSupplier;
-
         }
-
-        //complete this method
-        //public DateTime GetOrderCompletionDate(DateTime orderdate, Supplier supplier)
-        //{
-        //    DateTime DespatchDate;
-        //    DespatchDate = orderdate.AddDays(supplier.LeadTime);
-        //    return DespatchDate;
-        //}
 
         public DateTime GetOrderCompletionDate(DateTime orderdate, List<int> productIds)
         {
@@ -58,4 +48,4 @@
             return supplier.GetSupplierDispatchDate(orderdate);
         }
     }
- }
+}
