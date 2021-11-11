@@ -48,7 +48,7 @@
             DbContext dbContext = new DbContext();
             SupplierService supplierServiceinstance = new SupplierService(dbContext);
 
-            List<Supplier> listofsuppliers = supplierServiceinstance.GetSuppliersForOrder(new List<int>() { 3, 2, 1 });
+            List<Supplier> listofsuppliers = supplierServiceinstance.GetSuppliersForOrder(new [] { 3, 2, 1 });
 
             List<int> listofsupplierids = new List<int>();
             foreach (var ID in listofsuppliers)
