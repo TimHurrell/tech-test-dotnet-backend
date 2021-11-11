@@ -81,23 +81,6 @@
     //}
 
 
-    //public class ExtendLeadTimeIfDispatchDateFallsOnAWeekend
-    //{
-    //    public int Get(DateTime orderdate, int leadtime)
-    //    {
-
-    //        if (orderdate.AddDays(leadtime).DayOfWeek == DayOfWeek.Saturday)
-    //        {
-    //            leadtime += 2;
-    //        }
-    //        else if (orderdate.AddDays(leadtime).DayOfWeek == DayOfWeek.Sunday)
-    //        {
-    //            leadtime += 1; ;
-    //        }
-    //        return leadtime;
-    //    }
-
-    //}
 
 
     //public class ExtendLeadTimeIfLeadTimeCrossesAWeekend
