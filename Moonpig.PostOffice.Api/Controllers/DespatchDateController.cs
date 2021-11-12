@@ -17,8 +17,10 @@
             SupplierService supplierService = new SupplierService(new DbContext());
 
             var despatchDate = supplierService.GetOrderCompletionDate(orderDate, productIds);
+            despatchDate = supplierService.ExtendLeadTimeIfDispatchDateFallsOnAWeekend(despatchDate);
 
             return new DespatchDate { Date = despatchDate };
+
 
             //older 
             //IEnumerable <Supplier> suppliers = supplierService.GetSuppliersForOrder(productIds);
