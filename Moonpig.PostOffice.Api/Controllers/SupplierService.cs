@@ -47,5 +47,41 @@
             var supplier = GetSupplierWithLongestLeadTime(suppliers);
             return supplier.GetSupplierDispatchDate(orderdate);
         }
+
+
+        public DateTime ExtendLeadTimeIfDispatchDateFallsOnAWeekend(DateTime initialdespatchdate)
+        {
+            DateTime despatchdate;
+            despatchdate = initialdespatchdate;
+            if (initialdespatchdate.DayOfWeek == DayOfWeek.Saturday)
+            {
+                despatchdate = initialdespatchdate.AddDays(2);
+            }
+            else if (initialdespatchdate.DayOfWeek == DayOfWeek.Sunday)
+            {
+                despatchdate = initialdespatchdate.AddDays(1);
+            }
+            return despatchdate;
+        }
+
+        //public class ExtendLeadTimeIfDispatchDateFallsOnAWeekend
+        //{
+        //    public int Get(DateTime orderdate, int leadtime)
+        //    {
+
+        //        if (orderdate.AddDays(leadtime).DayOfWeek == DayOfWeek.Saturday)
+        //        {
+        //            leadtime += 2;
+        //        }
+        //        else if (orderdate.AddDays(leadtime).DayOfWeek == DayOfWeek.Sunday)
+        //        {
+        //            leadtime += 1; ;
+        //        }
+        //        return leadtime;
+        //    }
+
+        //}
+
+
     }
 }

@@ -35,8 +35,24 @@
         date.Date.ShouldBe(new DateTime(2018, 1, 22).Date.AddDays(3));
     }
 
+        [Fact]
+        public void SaturdayHasExtraTwoDaysLeadTimeOfOneDay()
+        {
+            DespatchDateController controller = new DespatchDateController();
+            var date = controller.Get(new List<int>() { 1 }, new DateTime(2018, 1, 26));
+            date.Date.ShouldBe(new DateTime(2018, 1, 26).Date.AddDays(3));
+        }
 
-    [Fact]
+        [Fact]
+        public void SundayHasExtraDayTimeOfThreeDay()
+        {
+            DespatchDateController controller = new DespatchDateController();
+            var date = controller.Get(new List<int>() { 3 }, new DateTime(2018, 1, 25));
+            date.Date.ShouldBe(new DateTime(2018, 1, 25).Date.AddDays(4));
+        }
+
+
+        [Fact]
         public void TestReturnedOneProductIdFromSupplierService()
         {
             DbContext dbContext = new DbContext();
@@ -123,24 +139,27 @@
             supplierService.GetOrderCompletionDate(new DateTime(2021, 11, 5), new List<int> { 1, 9 }).ShouldBe(new DateTime(2021, 11, 11));
         }
 
-        //    [Fact]
-        //    public void GetLeadTimeIfDispatchDateFallsOnSaturday()
-        //    {
-        //        ExtendLeadTimeIfDispatchDateFallsOnAWeekend extendleadtimeifdispatchdatefallsonaweekendinstance = new ExtendLeadTimeIfDispatchDateFallsOnAWeekend();
-        //        int extendedleadtime = extendleadtimeifdispatchdatefallsonaweekendinstance.Get(new DateTime(2021, 10, 29), 1);
 
-        //        Assert.Equal(3, extendedleadtime);
-        //    }
+        [Fact]
+        public void GetLeadTimeIfDispatchDateFallsOnSaturday()
+        {
+            var dbContext = new DbContext();
+            var supplierService = new SupplierService(dbContext);
+            var date = supplierService.ExtendLeadTimeIfDispatchDateFallsOnAWeekend(new DateTime(2021, 11, 13)); 
 
+            date.Date.ShouldBe(new DateTime(2021, 11, 13).Date.AddDays(2));
+        }
 
-        //    [Fact]
-        //    public void GetLeadTimeIfDispatchDateFallsOnSunday()
-        //    {
-        //        ExtendLeadTimeIfDispatchDateFallsOnAWeekend extendleadtimeifdispatchdatefallsonaweekendinstance = new ExtendLeadTimeIfDispatchDateFallsOnAWeekend();
-        //        int extendedleadtime = extendleadtimeifdispatchdatefallsonaweekendinstance.Get(new DateTime(2021, 10, 29), 2);
+        [Fact]
+        public void GetLeadTimeIfDispatchDateFallsOnSunday()
+        {
+            var dbContext = new DbContext();
+            var supplierService = new SupplierService(dbContext);
+            var date = supplierService.ExtendLeadTimeIfDispatchDateFallsOnAWeekend(new DateTime(2021, 11, 14));
 
-        //        Assert.Equal(3, extendedleadtime);
-        //    }
+            date.Date.ShouldBe(new DateTime(2021, 11, 13).Date.AddDays(2));
+        }
+
 
 
         //    [Fact]
