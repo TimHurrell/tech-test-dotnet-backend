@@ -112,6 +112,18 @@
 
 
         [Fact]
+        public void TestDespatchDateFromLeadTime()
+        {
+            Supplier Supplier1 = new Supplier();
+            Supplier1.LeadTime = 7;
+
+
+            var date = Supplier1.GetSupplierDispatchDate(new DateTime(2018, 1, 25));
+            date.Date.ShouldBe(new DateTime(2018, 1, 25).Date.AddDays(7));
+        }
+
+
+        [Fact]
         public void TestGetLongestLeadTimeWithFromThreeSuppliers()
         {
             Supplier Supplier1 = new Supplier();
@@ -145,7 +157,7 @@
         {
             var dbContext = new DbContext();
             var supplierService = new SupplierService(dbContext);
-            var date = supplierService.ExtendLeadTimeIfDispatchDateFallsOnAWeekend(new DateTime(2021, 11, 13)); 
+            var date = supplierService.PushtoMondayIfDispatchDateFallsOnAWeekend(new DateTime(2021, 11, 13)); 
 
             date.Date.ShouldBe(new DateTime(2021, 11, 13).Date.AddDays(2));
         }
@@ -155,49 +167,46 @@
         {
             var dbContext = new DbContext();
             var supplierService = new SupplierService(dbContext);
-            var date = supplierService.ExtendLeadTimeIfDispatchDateFallsOnAWeekend(new DateTime(2021, 11, 14));
+            var date = supplierService.PushtoMondayIfDispatchDateFallsOnAWeekend(new DateTime(2021, 11, 14));
 
             date.Date.ShouldBe(new DateTime(2021, 11, 13).Date.AddDays(2));
         }
 
 
 
-        //    [Fact]
-        //    public void GetLeadTimeIfDispatchDateFallsOnMonday()
-        //    {
-        //        ExtendLeadTimeIfDispatchDateFallsOnAWeekend extendleadtimeifdispatchdatefallsonaweekendinstance = new ExtendLeadTimeIfDispatchDateFallsOnAWeekend();
-        //        int extendedleadtime = extendleadtimeifdispatchdatefallsonaweekendinstance.Get(new DateTime(2021, 10, 29), 3);
 
-        //        Assert.Equal(3, extendedleadtime);
-        //    }
+        [Fact]
+        public void GetDespatchDateIfLeadTimeCrossesOneWeekend()
+        {
+            Supplier Supplier1 = new Supplier();
+            Supplier1.LeadTime = 7;
 
 
-        //    [Fact]
-        //    public void GetLeadTimeIfLeadTimeCrossesOneWeekend()
-        //    {
-        //        ExtendLeadTimeIfLeadTimeCrossesAWeekend extendLeadTimeIfLeadTimeCrossesAWeekendinstance = new ExtendLeadTimeIfLeadTimeCrossesAWeekend();
-        //        int extendedleadtime = extendLeadTimeIfLeadTimeCrossesAWeekendinstance.Get(new DateTime(2021, 10, 29), 5);
+            var date = Supplier1.GetSupplierDispatchDateIfLeadTimeCrossesAWeekend(new DateTime(2021, 11, 10));
+            date.Date.ShouldBe(new DateTime(2021, 11, 10).Date.AddDays(9));
+        }
 
-        //        Assert.Equal(7, extendedleadtime);
-        //    }
+        [Fact]
+        public void GetDespatchDateIfLeadTimeCrossesTwoWeekends()
+        {
+            Supplier Supplier1 = new Supplier();
+            Supplier1.LeadTime = 7;
 
-        //    [Fact]
-        //    public void GetLeadTimeIfLeadTimeCrossesTwoWeekends()
-        //    {
-        //        ExtendLeadTimeIfLeadTimeCrossesAWeekend extendLeadTimeIfLeadTimeCrossesAWeekendinstance = new ExtendLeadTimeIfLeadTimeCrossesAWeekend();
-        //        int extendedleadtime = extendLeadTimeIfLeadTimeCrossesAWeekendinstance.Get(new DateTime(2021, 10, 26), 13);
 
-        //        Assert.Equal(17, extendedleadtime);
-        //    }
+            var date = Supplier1.GetSupplierDispatchDateIfLeadTimeCrossesAWeekend(new DateTime(2021, 11, 11));
+            date.Date.ShouldBe(new DateTime(2021, 11, 11).Date.AddDays(11));
+        }
 
-        //    [Fact]
-        //    public void GetLeadTimeIfLeadTimeCrossesThreeWeekends()
-        //    {
-        //        ExtendLeadTimeIfLeadTimeCrossesAWeekend extendLeadTimeIfLeadTimeCrossesAWeekendinstance = new ExtendLeadTimeIfLeadTimeCrossesAWeekend();
-        //        int extendedleadtime = extendLeadTimeIfLeadTimeCrossesAWeekendinstance.Get(new DateTime(2021, 10, 27), 13);
+        [Fact]
+        public void GetDespatchDateIfLeadTimeCrossesThreeWeekends()
+        {
+            Supplier Supplier1 = new Supplier();
+            Supplier1.LeadTime = 14;
 
-        //        Assert.Equal(19, extendedleadtime);
-        //    }
+
+            var date = Supplier1.GetSupplierDispatchDateIfLeadTimeCrossesAWeekend(new DateTime(2021, 11, 11));
+            date.Date.ShouldBe(new DateTime(2021, 11, 11).Date.AddDays(20));
+        }
     }
 
 }

@@ -16,15 +16,25 @@ namespace Moonpig.PostOffice.Data
 
         public DateTime GetSupplierDispatchDate(DateTime orderdate)
         {
-            //using the leadtime from this object work out the despatch date.
-            //and write a test for it
-            //at this point we don't care what was ordered. this class knows nothing of orders
-            //and doesn't need to
             //throw new NotImplementedException();
             DateTime DespatchDate;
             DespatchDate = orderdate.AddDays(LeadTime);
             return DespatchDate;
 
         }
+
+        public DateTime GetSupplierDispatchDateIfLeadTimeCrossesAWeekend(DateTime orderdate)
+        {
+            for (int i = 0; i <= LeadTime; i++)
+            {
+                if (orderdate.AddDays(i).DayOfWeek == DayOfWeek.Saturday || orderdate.AddDays(i).DayOfWeek == DayOfWeek.Sunday)
+                {
+                    LeadTime++;
+                }
+            }
+            return GetSupplierDispatchDate(orderdate);
+
+        }
+
     }
 }

@@ -15,40 +15,18 @@
         public DespatchDate Get(List<int> productIds, DateTime orderDate)
         {
             SupplierService supplierService = new SupplierService(new DbContext());
-
+// part 1
             var despatchDate = supplierService.GetOrderCompletionDate(orderDate, productIds);
-            despatchDate = supplierService.ExtendLeadTimeIfDispatchDateFallsOnAWeekend(despatchDate);
+// part 2
+            despatchDate = supplierService.PushtoMondayIfDispatchDateFallsOnAWeekend(despatchDate);
+// part 3
+            despatchDate = supplierService.GetOrderCompletionDateIfLeadTimeCrossesWeekend(orderDate, productIds);
 
             return new DespatchDate { Date = despatchDate };
 
 
-            //older 
-            //IEnumerable <Supplier> suppliers = supplierService.GetSuppliersForOrder(productIds);
-
-            //var supplier = supplierService.GetSupplierWithLongestLeadTime(suppliers);
-
-            //var despatchDate = supplier.GetSupplierDispatchDate(orderDate);
-
-            //return new DespatchDate { Date = despatchDate };
 
 
-
-            //oldest
-            //_mlt = orderDate; // max lead time
-            //foreach (var ID in productIds)
-            //{
-            //    DbContext dbContext = new DbContext();
-            //    var s = dbContext.Products.Single(x => x.ProductId == ID).SupplierId;
-            //    var lt = dbContext.Suppliers.Single(x => x.SupplierId == s).LeadTime;
-            //    if (orderDate.AddDays(lt) > _mlt)
-            //        _mlt = orderDate.AddDays(lt);
-            //}
-            //if (_mlt.DayOfWeek == DayOfWeek.Saturday)
-            //{
-            //    return new DespatchDate { Date = _mlt.AddDays(2) };
-            //}
-            //else if (_mlt.DayOfWeek == DayOfWeek.Sunday) return new DespatchDate { Date = _mlt.AddDays(1) };
-            //else return new DespatchDate { Date = _mlt };
         }
     }
 
@@ -83,24 +61,6 @@
     //}
 
 
-
-
-    //public class ExtendLeadTimeIfLeadTimeCrossesAWeekend
-    //{
-    //    public int Get(DateTime orderdate, int leadtime)
-    //    {
-    //        for (int i = 0; i <= leadtime; i++)
-    //        {
-    //            if (orderdate.AddDays(i).DayOfWeek == DayOfWeek.Saturday || orderdate.AddDays(i).DayOfWeek == DayOfWeek.Sunday)
-    //            {
-    //                leadtime++;
-    //            }
-    //        }
-
-    //        return leadtime;
-    //    }
-
-    //}
 
 
     //public class IdentifyIfWeekend

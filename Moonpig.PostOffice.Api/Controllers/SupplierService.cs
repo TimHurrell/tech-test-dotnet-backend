@@ -49,7 +49,7 @@
         }
 
 
-        public DateTime ExtendLeadTimeIfDispatchDateFallsOnAWeekend(DateTime initialdespatchdate)
+        public DateTime PushtoMondayIfDispatchDateFallsOnAWeekend(DateTime initialdespatchdate)
         {
             DateTime despatchdate;
             despatchdate = initialdespatchdate;
@@ -64,24 +64,12 @@
             return despatchdate;
         }
 
-        //public class ExtendLeadTimeIfDispatchDateFallsOnAWeekend
-        //{
-        //    public int Get(DateTime orderdate, int leadtime)
-        //    {
 
-        //        if (orderdate.AddDays(leadtime).DayOfWeek == DayOfWeek.Saturday)
-        //        {
-        //            leadtime += 2;
-        //        }
-        //        else if (orderdate.AddDays(leadtime).DayOfWeek == DayOfWeek.Sunday)
-        //        {
-        //            leadtime += 1; ;
-        //        }
-        //        return leadtime;
-        //    }
-
-        //}
-
-
+        public DateTime GetOrderCompletionDateIfLeadTimeCrossesWeekend(DateTime orderdate, List<int> productIds)
+        {
+            var suppliers = GetSuppliersForOrder(productIds);
+            var supplier = GetSupplierWithLongestLeadTime(suppliers);
+            return supplier.GetSupplierDispatchDateIfLeadTimeCrossesAWeekend(orderdate);
+        }
     }
 }
