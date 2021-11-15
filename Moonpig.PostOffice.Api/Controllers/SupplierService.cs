@@ -45,24 +45,11 @@
         {
             var suppliers = GetSuppliersForOrder(productIds);
             var supplier = GetSupplierWithLongestLeadTime(suppliers);
-            return supplier.GetSupplierDispatchDate(orderdate);
+            var postOffice = new PostOffice();
+
+            return postOffice.GetNextWorkingDay(supplier.GetSupplierDispatchDate(orderdate));
         }
 
-
-        public DateTime PushtoMondayIfDispatchDateFallsOnAWeekend(DateTime initialdespatchdate)
-        {
-            DateTime despatchdate;
-            despatchdate = initialdespatchdate;
-            if (initialdespatchdate.DayOfWeek == DayOfWeek.Saturday)
-            {
-                despatchdate = initialdespatchdate.AddDays(2);
-            }
-            else if (initialdespatchdate.DayOfWeek == DayOfWeek.Sunday)
-            {
-                despatchdate = initialdespatchdate.AddDays(1);
-            }
-            return despatchdate;
-        }
 
 
         public DateTime GetOrderCompletionDateIfLeadTimeCrossesWeekend(DateTime orderdate, List<int> productIds)

@@ -15,18 +15,14 @@
         public DespatchDate Get(List<int> productIds, DateTime orderDate)
         {
             SupplierService supplierService = new SupplierService(new DbContext());
-// part 1
+// part 1 and part 2
             var supplierCompletionDate = supplierService.GetOrderCompletionDate(orderDate, productIds);
             // part 2
-            var postOffice = new PostOffice();
 
-            var despatchDate = postOffice.GetNextWorkingDay(supplierCompletionDate);
-
-            despatchDate = supplierService.PushtoMondayIfDispatchDateFallsOnAWeekend(despatchDate);
 // part 3
-            despatchDate = supplierService.GetOrderCompletionDateIfLeadTimeCrossesWeekend(orderDate, productIds);
+         //   despatchDate = supplierService.GetOrderCompletionDateIfLeadTimeCrossesWeekend(orderDate, productIds);
 
-            return new DespatchDate { Date = despatchDate };
+            return new DespatchDate { Date = supplierCompletionDate };
 
             //the goal is to try and remove as much logic from the controller into the service class,
             //because there are less moving parts and it is more testable.
