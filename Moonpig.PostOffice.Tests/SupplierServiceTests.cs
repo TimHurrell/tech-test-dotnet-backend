@@ -103,25 +103,6 @@
         }
 
 
-        [Fact]
-        public void GetLeadTimeIfDispatchDateFallsOnSaturday()
-        {
-            var dbContext = new DbContext();
-            var supplierService = new SupplierService(dbContext);
-            var date = supplierService.PushtoMondayIfDispatchDateFallsOnAWeekend(new DateTime(2021, 11, 13));
-
-            date.Date.ShouldBe(new DateTime(2021, 11, 13).Date.AddDays(2));
-        }
-
-        [Fact]
-        public void GetLeadTimeIfDispatchDateFallsOnSunday()
-        {
-            var dbContext = new DbContext();
-            var supplierService = new SupplierService(dbContext);
-            var date = supplierService.PushtoMondayIfDispatchDateFallsOnAWeekend(new DateTime(2021, 11, 14));
-
-            date.Date.ShouldBe(new DateTime(2021, 11, 13).Date.AddDays(2));
-        }
 
 
     }

@@ -7,7 +7,7 @@
     using Xunit;
     using Data;
 
-    public class PostOfficeTests
+    public class ControllerTests
     {
 
 
