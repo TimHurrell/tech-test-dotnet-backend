@@ -10,23 +10,25 @@
 
 
         [Fact]
-        public void GetLeadTimeIfDispatchDateFallsOnSaturday()
+        public void IfDispatchDateFallsOnSaturdayEnsurePushedToMonday()
         {
             var postOffice = new PostOffice();
 
             var date = postOffice.GetNextWorkingDay(new DateTime(2021, 11, 13));
 
-            date.Date.ShouldBe(new DateTime(2021, 11, 13).Date.AddDays(2));
+            date.DayOfWeek.ShouldBe(DayOfWeek.Monday);
         }
 
+       // supplierCompletionDate.DayOfWeek == DayOfWeek.Sunday
+
         [Fact]
-        public void GetLeadTimeIfDispatchDateFallsOnSunday()
+        public void IfDispatchDateFallsOnSundayEnsurePushedToMonday()
         {
             var postOffice = new PostOffice();
 
             var date = postOffice.GetNextWorkingDay(new DateTime(2021, 11, 14));
 
-            date.Date.ShouldBe(new DateTime(2021, 11, 13).Date.AddDays(2));
+            date.DayOfWeek.ShouldBe(DayOfWeek.Monday);
         }
 
 

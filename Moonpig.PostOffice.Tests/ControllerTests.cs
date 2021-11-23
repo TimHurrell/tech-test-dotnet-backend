@@ -46,9 +46,13 @@
         [Fact]
         public void SundayHasExtraDayTimeOfThreeDay()
         {
+            //OrderDate Thursday
+            //DespatchDate Tuesday
+
             DespatchDateController controller = new DespatchDateController();
             var date = controller.Get(new List<int>() { 3 }, new DateTime(2018, 1, 25));
             date.Date.ShouldBe(new DateTime(2018, 1, 25).Date.AddDays(5));
+
         }
 
 
