@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace Moonpig.PostOffice.Data
 {
@@ -16,23 +15,11 @@ namespace Moonpig.PostOffice.Data
 
         public DateTime GetSupplierDispatchDate(DateTime orderdate)
         {
-            //throw new NotImplementedException();
-            DateTime DespatchDate;
-            DespatchDate = orderdate.AddDays(LeadTime);
+            //DateTime DespatchDate;
+            //DespatchDate = orderdate.AddBusinessDays(LeadTime);
+            var DespatchDate = orderdate.AddDays(LeadTime);
             return DespatchDate;
 
-        }
-
-        public DateTime GetSupplierDispatchDateIfLeadTimeCrossesAWeekend(DateTime orderdate)
-        {
-            for (int i = 0; i <= LeadTime; i++)
-            {
-                if (orderdate.AddDays(i).DayOfWeek == DayOfWeek.Saturday || orderdate.AddDays(i).DayOfWeek == DayOfWeek.Sunday)
-                {
-                    LeadTime++;
-                }
-            }
-            return GetSupplierDispatchDate(orderdate);
         }
     }
 }

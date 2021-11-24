@@ -22,44 +22,7 @@
         }
 
 
-
-        [Fact]
-        public void GetDespatchDateIfLeadTimeCrossesOneWeekend()
-        {
-            Supplier Supplier1 = new Supplier();
-            Supplier1.LeadTime = 7;
-
-
-            var date = Supplier1.GetSupplierDispatchDateIfLeadTimeCrossesAWeekend(new DateTime(2021, 11, 10));
-            date.Date.ShouldBe(new DateTime(2021, 11, 10).Date.AddDays(9));
-        }
-
-        [Fact]
-        public void GetDespatchDateIfLeadTimeCrossesTwoWeekends()
-        {
-            Supplier Supplier1 = new Supplier();
-            Supplier1.LeadTime = 7;
-
-
-            var date = Supplier1.GetSupplierDispatchDateIfLeadTimeCrossesAWeekend(new DateTime(2021, 11, 11));
-            date.Date.ShouldBe(new DateTime(2021, 11, 11).Date.AddDays(11));
-        }
-
-
-
-        [Fact]
-        public void GetDespatchDateIfLeadTimeCrossesThreeWeekends()
-        {
-            Supplier Supplier1 = new Supplier();
-            Supplier1.LeadTime = 14;
-
-
-            var date = Supplier1.GetSupplierDispatchDateIfLeadTimeCrossesAWeekend(new DateTime(2021, 11, 11));
-            date.Date.ShouldBe(new DateTime(2021, 11, 11).Date.AddDays(20));
-        }
-
-
-
+  
 
 //        The Moonpig post office is still getting complaints...It turns out suppliers
 //don't work during the weekend as well, i.e. if an order is received on the
@@ -109,7 +72,7 @@
         }
 
         [Fact]
-        public void Add18BusinessDaysToFridayShouldBeMondayTest()
+        public void Add18BusinessDaysToFridayShouldBeWednesdayTest()
         {
             var date = new DateTime(2021, 11, 26);
 

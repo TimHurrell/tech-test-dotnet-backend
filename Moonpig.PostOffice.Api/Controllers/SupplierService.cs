@@ -26,13 +26,6 @@
             return listofsuppliers;
         }
 
-        public DateTime GetSupplierCompletionDate(DateTime orderDate, List<int> productIds)
-        {
-            var suppliers = GetSuppliersForOrder(productIds);
-            var supplier = GetSupplierWithLongestLeadTime(suppliers);
-            var supplierCompletionDate = orderDate.AddBusinessDays(supplier.LeadTime);
-            return supplierCompletionDate;
-        }
 
         public Supplier GetSupplierWithLongestLeadTime(IEnumerable<Supplier> listofsuppliers)
         {
@@ -49,21 +42,15 @@
             return selectedSupplier;
         }
 
-        //public DateTime GetOrderCompletionDate(DateTime orderdate, List<int> productIds)
-        //{
-        //    var suppliers = GetSuppliersForOrder(productIds);
-        //    var supplier = GetSupplierWithLongestLeadTime(suppliers);
+        public DateTime GetSupplierCompletionDate(DateTime orderDate, List<int> productIds)
+        {
+            var suppliers = GetSuppliersForOrder(productIds);
+            var supplier = GetSupplierWithLongestLeadTime(suppliers);
+            var supplierCompletionDate = orderDate.AddBusinessDays(supplier.LeadTime);
+            return supplierCompletionDate;
+        }
 
-        //    // Part 1
-        //    // return supplier.GetSupplierDispatchDate(orderdate);
 
-        //    // Part 2
-        //    //var postOffice = new PostOffice();
-        //    //return postOffice.GetNextWorkingDay(supplier.GetSupplierDispatchDate(orderdate));
-
-        //    //part 3
-        //    return supplier.GetSupplierDispatchDateIfLeadTimeCrossesAWeekend(orderdate);
-        //}
 
     }
 }
