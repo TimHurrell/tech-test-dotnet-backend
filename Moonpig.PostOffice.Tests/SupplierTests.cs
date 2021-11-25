@@ -11,23 +11,37 @@
 
 
         [Fact]
-        public void TestDespatchDateFromLeadTime()
+        public void Add7BusinessDaysToFridayShouldBeFridayTest()
         {
             Supplier Supplier1 = new Supplier();
             Supplier1.LeadTime = 7;
 
 
-            var date = Supplier1.GetSupplierDispatchDate(new DateTime(2018, 1, 25));
-            date.Date.ShouldBe(new DateTime(2018, 1, 25).Date.AddDays(7));
+            var date = Supplier1.GetSupplierDispatchDate(new DateTime(2021, 11, 26));
+            date.DayOfWeek.ShouldBe((DayOfWeek.Friday));
         }
 
 
-  
+        [Fact]
+        public void Add10BusinessDaysToFridayShouldBeMondayTest()
+        {
+            Supplier Supplier1 = new Supplier();
+            Supplier1.LeadTime = 10;
 
-//        The Moonpig post office is still getting complaints...It turns out suppliers
-//don't work during the weekend as well, i.e. if an order is received on the
-//Friday with a lead time of 2 days, Moonpig would receive and despatch on the
-//Tuesday.
+
+            var date = Supplier1.GetSupplierDispatchDate(new DateTime(2021, 11, 26));
+            date.DayOfWeek.ShouldBe((DayOfWeek.Monday));
+        }
+
+
+
+
+
+
+        //        The Moonpig post office is still getting complaints...It turns out suppliers
+        //don't work during the weekend as well, i.e. if an order is received on the
+        //Friday with a lead time of 2 days, Moonpig would receive and despatch on the
+        //Tuesday.
 
 
         [Fact]
