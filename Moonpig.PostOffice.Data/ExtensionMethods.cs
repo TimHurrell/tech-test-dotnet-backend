@@ -1,7 +1,8 @@
-﻿using System;
+﻿
 
-namespace Moonpig.PostOffice.Api
+namespace Moonpig.PostOffice.Data
 {
+    using System;
     public static class ExtensionMethods
     {
         public static DateTime AddBusinessDays(this DateTime date, int days)

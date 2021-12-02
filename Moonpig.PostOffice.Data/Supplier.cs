@@ -1,7 +1,12 @@
 ﻿using System;
 
+
+
+
+
 namespace Moonpig.PostOffice.Data
 {
+
     public class Supplier
     {
         public int SupplierId { get; set; }
@@ -15,9 +20,7 @@ namespace Moonpig.PostOffice.Data
 
         public DateTime GetSupplierDispatchDate(DateTime orderdate)
         {
-            //DateTime DespatchDate;
-            //DespatchDate = orderdate.AddBusinessDays(LeadTime);
-            var DespatchDate = orderdate.AddDays(LeadTime);
+            var DespatchDate = orderdate.AddBusinessDays(LeadTime);
             return DespatchDate;
 
         }

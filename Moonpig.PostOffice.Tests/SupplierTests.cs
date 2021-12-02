@@ -11,10 +11,22 @@
 
 
         [Fact]
-        public void Add7BusinessDaysToFridayShouldBeFridayTest()
+        public void Add7BusinessDaysToFridayShouldBeTuesdayTest()
         {
             Supplier Supplier1 = new Supplier();
             Supplier1.LeadTime = 7;
+
+
+            var date = Supplier1.GetSupplierDispatchDate(new DateTime(2021, 11, 26));
+            date.DayOfWeek.ShouldBe((DayOfWeek.Tuesday));
+        }
+
+
+        [Fact]
+        public void Add10BusinessDaysToFridayShouldBeFridayTest()
+        {
+            Supplier Supplier1 = new Supplier();
+            Supplier1.LeadTime = 10;
 
 
             var date = Supplier1.GetSupplierDispatchDate(new DateTime(2021, 11, 26));
@@ -22,26 +34,7 @@
         }
 
 
-        [Fact]
-        public void Add10BusinessDaysToFridayShouldBeMondayTest()
-        {
-            Supplier Supplier1 = new Supplier();
-            Supplier1.LeadTime = 10;
 
-
-            var date = Supplier1.GetSupplierDispatchDate(new DateTime(2021, 11, 26));
-            date.DayOfWeek.ShouldBe((DayOfWeek.Monday));
-        }
-
-
-
-
-
-
-        //        The Moonpig post office is still getting complaints...It turns out suppliers
-        //don't work during the weekend as well, i.e. if an order is received on the
-        //Friday with a lead time of 2 days, Moonpig would receive and despatch on the
-        //Tuesday.
 
 
         [Fact]

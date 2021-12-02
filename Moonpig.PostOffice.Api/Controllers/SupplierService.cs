@@ -46,7 +46,7 @@
         {
             var suppliers = GetSuppliersForOrder(productIds);
             var supplier = GetSupplierWithLongestLeadTime(suppliers);
-            var supplierCompletionDate = orderDate.AddBusinessDays(supplier.LeadTime);
+            var supplierCompletionDate = supplier.GetSupplierDispatchDate(orderDate);
             return supplierCompletionDate;
         }
 
