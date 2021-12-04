@@ -91,16 +91,6 @@
         }
 
 
-        //[Fact]
-        //public void GetDispatchDateFromOrderDateForSupplierWithLongestLeadtime()
-        //{
-        //    var dbContext = new DbContext();
-        //    var supplierService = new SupplierService(dbContext);
-
-        //    supplierService.GetOrderCompletionDate(new DateTime(2021, 11, 5), new List<int> { 1, 9 }).ShouldBe(new DateTime(2021, 11, 15));
-        //}
-
-
 
 
     }

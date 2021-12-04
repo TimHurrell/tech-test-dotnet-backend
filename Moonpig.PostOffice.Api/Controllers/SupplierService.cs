@@ -29,18 +29,9 @@
 
         public Supplier GetSupplierWithLongestLeadTime(IEnumerable<Supplier> listofsuppliers)
         {
-            int LongestLeadTime = 0;
-            Supplier selectedSupplier = new Supplier();
-            foreach (var supplier in listofsuppliers)
-            {
-                if (supplier.LeadTime > LongestLeadTime)
-                {
-                    LongestLeadTime = supplier.LeadTime;
-                    selectedSupplier = supplier;
-                }
-            }
-            return selectedSupplier;
+            return listofsuppliers.OrderByDescending(o => o.LeadTime).First();
         }
+
 
         public DateTime GetSupplierCompletionDate(DateTime orderDate, List<int> productIds)
         {
