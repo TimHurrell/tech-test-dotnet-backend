@@ -20,9 +20,7 @@ namespace Moonpig.PostOffice.Data
 
         public DateTime GetSupplierDispatchDate(DateTime orderdate)
         {
-            var DespatchDate = orderdate.AddBusinessDays(LeadTime);
-            return DespatchDate;
-
+           return orderdate.AddBusinessDays(LeadTime);
         }
     }
 }
